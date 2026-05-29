@@ -5,17 +5,29 @@ Lightweight Python tool that monitors console.log for the game deadlock. Reads a
 # Prerequisites
 
 Before running this script, ensure you have the following installed: 
-* **Python3.9 or Higher**
+* **[Python3.9 or Higher](https://www.python.org/downloads/)**
 * **Of course Deadlock**
 
 # Setup
 
 1. Clone or download this repository.
-2. Install the required Python dependencies. You can run the following:
+2. Install the required Python dependencies. You can run one of the following:
+# If you cloned the repository run this:
 ```bash
 pip install -r requirements.txt
 ```
-3. Lastly make sure this is in your steam properties launch options:
+# If you are manually installing, run this in Command Prompt:
+```bash
+pip install pypresence
+```
+
+3.Extract the contents fully in the deadlock local files. You can go to steam - browse local files.
+
+# Example
+<img width="628" height="175" alt="image" src="https://github.com/user-attachments/assets/c8f0f5ce-027b-4b7f-b5f7-a0eb1e7841d9" />
+
+
+4. Lastly make sure this is in your steam properties launch options:
 ```bash
 StartDeadlockStatus.bat %command% -condebug
 ```
