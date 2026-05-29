@@ -12,18 +12,18 @@ Before running this script, ensure you have the following installed:
 
 1. Clone or download this repository.
 2. Install the required Python dependencies. You can run one of the following:
-# If you cloned the repository run this:
+### If you cloned the repository run this:__
 ```bash
 pip install -r requirements.txt
 ```
-# If you are manually installing, run this in Command Prompt:
+### If you are manually installing, run this in Command Prompt:
 ```bash
 pip install pypresence
 ```
 
 3.Extract the contents fully in the deadlock local files. You can go to steam - browse local files.
 
-# Example
+## Example
 <img width="628" height="175" alt="image" src="https://github.com/user-attachments/assets/c8f0f5ce-027b-4b7f-b5f7-a0eb1e7841d9" />
 
 
@@ -31,7 +31,7 @@ pip install pypresence
 ```bash
 StartDeadlockStatus.bat %command% -condebug
 ```
-# Example
+## Example
 <img width="628" height="141" alt="image" src="https://github.com/user-attachments/assets/8a11d33f-7809-4deb-8afc-fbe5214cea30" />
 
 # Running
