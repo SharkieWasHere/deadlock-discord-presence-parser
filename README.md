@@ -38,3 +38,5 @@ StartDeadlockStatus.bat %command% -condebug
 
 Now with this setup whenever you open the game, it will automatically open the python script. This will close when Deadlock is not detected.
 Enjoy!
+And please feel free to edit or remove anything from this file!
+This was just made for my self as a non flashy status for discord.
