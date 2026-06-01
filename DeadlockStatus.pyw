@@ -91,7 +91,7 @@ def SteamID():
     ID = 0
     with open('game\\citadel\\console.log', "r") as log:
         for i in log:
-            CurrentLine = log.readline()
+            CurrentLine = i
             if "AuthStatus (steamid:" in CurrentLine:
                 StringList = CurrentLine.split("steamid:")
                 
