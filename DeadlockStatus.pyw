@@ -50,22 +50,30 @@ def ConsoleUpdate(log,InMatch = 0):
         if "[Client] Map: \"start\"" in line:
                 InMatch = 1
                 Updated = False
-                print("Found Match")
+                
         elif "[Client] Map: \"new_player_basics\"" in line:
                 InMatch = 2
                 Updated = False
-                print("Found Sandbox")
+                
         elif "[Client] Map:" in line:
                 InMatch = 0
                 Updated = False
-                print("Found Hideout")
                 
+        elif "Signon traffic \"BROADCAST\"" in line:
+                InMatch = 4
+                Updated = False
+                return("None", InMatch)
+        elif "Signon traffic \"DEMO\"" in line:
+                InMatch = 3
+                Updated = False
+                return("None", InMatch)
+        #In Future might change to list... This if chain is killing me..
                 
         
         
-        if(InMatch != 1 or (InMatch == 1 and Updated == False)):
+        if(InMatch == 0 or InMatch == 2 or (InMatch == 1 and Updated == False)):
                 
-                if " VMDL Camera Pose Success! " in line:
+                if " VMDL Camera Pose " in line:
             
                         StringList = line.split("/")
                 
@@ -151,13 +159,19 @@ while IsOpen("deadlock.exe"):
         elif(GameData[1] == 2):
                 Status = "In Sandbox"
                 X = "Messing around with"
-        else:
+        elif(GameData[1] == 0):
                 try:
                         Status = HeroData[Debug]['hideout_text']
                         X = "Relaxing as"
                 except:
                         Status = "In Hideout as"
                         X = "Relaxing as"
+        elif(GameData[1] == 3):
+                Status = "Watching Replay"
+                X = "Viewing through the patrons eyes"
+        elif(GameData[1] == 4):
+                Status = "Spectating Live Match"
+                X = "Viewing through the patrons eyes"
 
         Start = Debug
 
@@ -165,7 +179,7 @@ while IsOpen("deadlock.exe"):
                 try:
                         HeroName = HeroData[Debug]['name']
                 except:
-                        HeroName = "Unknown"
+                        HeroName = ":3"
                 rpc.update(
                 activity_type=ActivityType.PLAYING,
                 state=f"{Status}",
