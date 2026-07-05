@@ -33,18 +33,18 @@ def IsOpen(process_name):
 
 def ConsoleUpdate(log,InMatch = 0):
 
-    
+    Match = None
     Updated = True
-    
+
     while True:
         line = log.readline()
-    
-        
+
+
         if not line:
 
                 if not IsOpen("deadlock.exe"):
                         return None
-            
+
                 time.sleep(0.1)
                 continue
 
@@ -53,25 +53,29 @@ def ConsoleUpdate(log,InMatch = 0):
         # Log Most Recent Match ID
         if "match_id=" in line:
                 MatchTemp = line.split("match_id=") #For Testing
-                Match = MatchTemp[1]
+                Match = MatchTemp[1].strip()
         elif ".com/tv/" in line:
                 MatchTemp = line.split(".com/tv/")
                 MatchTemp = MatchTemp[1].split("_")
-                Match = MatchTemp[0]
+                Match = MatchTemp[0].strip()
+        elif "replays/" in line:
+                MatchTemp = line.split("replays/")
+                MatchTemp = MatchTemp[1].split(".")
+                Match = MatchTemp[0].strip()
 
         #Start Game State check
         if "[Client] Map: \"start\"" in line:
                 InMatch = 1
                 Updated = False
-                
+
         elif "[Client] Map: \"new_player_basics\"" in line:
                 InMatch = 2
                 Updated = False
-                
+
         elif "[Client] Map:" in line:
                 InMatch = 0
                 Updated = False
-                
+
         elif "Signon traffic \"BROADCAST\"" in line:
                 InMatch = 4
                 Updated = False
@@ -81,20 +85,20 @@ def ConsoleUpdate(log,InMatch = 0):
                 Updated = False
                 return("None", InMatch, Match)
         #In Future might change to list... This if chain is killing me..
-                
-        
-        
+
+
+
         if(InMatch == 0 or InMatch == 2 or (InMatch == 1 and Updated == False)):
-                
+
                 if " VMDL Camera Pose " in line:
-            
+
                         StringList = line.split("/")
-                
+
                         StringClean= StringList[len(StringList)-1].split(".vmdl")
 
                         Updated = True
 
-                        
+
                         return(StringClean[0], InMatch, Match)
           
             
@@ -147,11 +151,12 @@ rpc.connect()
 Start = 0
 ID = 0
 Hero = "Slork"
+MatchID = 0
 #Let Game Load Console
 
 while (ID <= 0):
         try:
-                
+
                 UserData = SteamID()
                 ID = UserData[0]
                 User = UserData[1]
@@ -163,10 +168,11 @@ while IsOpen("deadlock.exe"):
         GameData = ConsoleUpdate(log,InMatch) #Returns Hero, Game State, Match ID
         if GameData is None:
                 continue
-           
+
         Debug = GameData[0] #Debug for Internal Hero Name
 
-        MatchID = GameData[2]
+        if GameData[2] is not None:
+                MatchID = GameData[2]
 
         if(GameData[1] == 1):
                 Status = f"In Match: {MatchID}"
@@ -212,6 +218,7 @@ time.sleep(3)
 rpc.clear()
 rpc.close()
 sys.exit()
+
 
 
 
