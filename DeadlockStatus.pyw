@@ -47,6 +47,19 @@ def ConsoleUpdate(log,InMatch = 0):
             
                 time.sleep(0.1)
                 continue
+
+
+
+        # Log Most Recent Match ID
+        if "match_id=" in line:
+                MatchTemp = line.split("match_id=") #For Testing
+                Match = MatchTemp[1]
+        elif ".com/tv/" in line:
+                MatchTemp = line.split(".com/tv/")
+                MatchTemp = MatchTemp[1].split("_")
+                Match = MatchTemp[0]
+
+        #Start Game State check
         if "[Client] Map: \"start\"" in line:
                 InMatch = 1
                 Updated = False
@@ -62,11 +75,11 @@ def ConsoleUpdate(log,InMatch = 0):
         elif "Signon traffic \"BROADCAST\"" in line:
                 InMatch = 4
                 Updated = False
-                return("None", InMatch)
+                return("None", InMatch, Match)
         elif "Signon traffic \"DEMO\"" in line:
                 InMatch = 3
                 Updated = False
-                return("None", InMatch)
+                return("None", InMatch, Match)
         #In Future might change to list... This if chain is killing me..
                 
         
@@ -82,7 +95,7 @@ def ConsoleUpdate(log,InMatch = 0):
                         Updated = True
 
                         
-                        return(StringClean[0], InMatch)
+                        return(StringClean[0], InMatch, Match)
           
             
 
@@ -147,14 +160,16 @@ while (ID <= 0):
 InMatch = 0
 while IsOpen("deadlock.exe"):
         time.sleep(1)
-        GameData = ConsoleUpdate(log,InMatch)
+        GameData = ConsoleUpdate(log,InMatch) #Returns Hero, Game State, Match ID
         if GameData is None:
                 continue
            
-        Debug = GameData[0]
+        Debug = GameData[0] #Debug for Internal Hero Name
+
+        MatchID = GameData[2]
 
         if(GameData[1] == 1):
-                Status = "In Game"
+                Status = f"In Match: {MatchID}"
                 X = "Taking part in the ritual as"
         elif(GameData[1] == 2):
                 Status = "In Sandbox"
@@ -167,19 +182,18 @@ while IsOpen("deadlock.exe"):
                         Status = "In Hideout as"
                         X = "Relaxing as"
         elif(GameData[1] == 3):
-                Status = "Watching Replay"
+                Status = f"Watching Replay: {MatchID}"
                 X = "Viewing through the patrons eyes"
         elif(GameData[1] == 4):
-                Status = "Spectating Live Match"
+                Status = f"Spectating Live Match: {MatchID}"
                 X = "Viewing through the patrons eyes"
 
-        Start = Debug
 
         if(Hero != Debug or InMatch != GameData[1]):
                 try:
                         HeroName = HeroData[Debug]['name']
                 except:
-                        HeroName = ":3"
+                        HeroName = ":3" #This is a place holder..
                 rpc.update(
                 activity_type=ActivityType.PLAYING,
                 state=f"{Status}",
