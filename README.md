@@ -40,3 +40,26 @@ Now with this setup whenever you open the game, it will automatically open the p
 Enjoy!
 And please feel free to edit or remove anything from this file!
 This was just made for my self as a non flashy status for discord.
+
+# Linux
+
+Please install pypresence via your distro/pip. (I trust you know how)
+For Linux, The set up Is almost the same as Windows : 
+Extract zip where Local Files are, only difference is launch args change to 
+
+```bash
+python3 DeadlockStatus.py %command% -condebug
+```
+Thats it!
+
+## Examples for Linux
+
+Game Files Example
+
+<img width="981" height="382" alt="image" src="https://github.com/user-attachments/assets/d52ab5b0-137b-4941-a377-0cf3a56322de" />
+
+Launch Argument Example
+
+<img width="635" height="196" alt="image" src="https://github.com/user-attachments/assets/c41c815f-af3b-4058-98b7-be6f972eebf7" />
+
+
